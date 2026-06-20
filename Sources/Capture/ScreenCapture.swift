@@ -28,7 +28,18 @@ final class ScreenCapture {
 
     // MARK: - Region
 
-    func captureRegion() async throws -> URL? {
+    func captureInteractiveRegion() async throws -> URL? {
+        guard !isCapturing else { return nil }
+        isCapturing = true
+        defer { isCapturing = false }
+
+        let tempPath = makeTempPath()
+        let success = await runScreencapture(["-i", "-J", "selection", "-o", "-x", "-t", "png", tempPath])
+        guard success, FileManager.default.fileExists(atPath: tempPath) else { return nil }
+        return URL(fileURLWithPath: tempPath)
+    }
+
+    func captureRegionOnly() async throws -> URL? {
         guard !isCapturing else { return nil }
         isCapturing = true
         defer { isCapturing = false }
@@ -59,7 +70,7 @@ final class ScreenCapture {
     // MARK: - OCR Region
 
     func captureAndOCR() async throws -> String? {
-        guard let url = try await captureRegion() else { return nil }
+        guard let url = try await captureRegionOnly() else { return nil }
         defer { try? FileManager.default.removeItem(at: url) }
 
         guard let image = NSImage(contentsOf: url),

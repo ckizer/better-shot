@@ -51,11 +51,13 @@ final class MenuBarPopoverController: NSObject {
         guard let panel else { return }
 
         let panelWidth = panel.frame.width
-        let panelX = screenRect.midX - panelWidth / 2
-        let panelY = screenRect.minY - panel.frame.height
+        let unclampedPanelX = screenRect.midX - panelWidth / 2
+        let panelX = clampedPanelX(unclampedPanelX, width: panelWidth, screen: buttonWindow.screen)
+        let panelY = screenRect.minY - panel.frame.height + MenuBarPopoverMetrics.shadowPadding - MenuBarPopoverMetrics.menuGap
 
         panel.setFrameOrigin(NSPoint(x: panelX, y: panelY))
         panel.alphaValue = 0
+        button.isHighlighted = true
         panel.orderFrontRegardless()
         isOpen = true
 
@@ -81,9 +83,12 @@ final class MenuBarPopoverController: NSObject {
             ctx.allowsImplicitAnimation = true
             closingPanel.animator().alphaValue = 0
         }, completionHandler: {
-            closingPanel.orderOut(nil)
-            closingPanel.contentView = nil
+            Task { @MainActor in
+                closingPanel.orderOut(nil)
+                closingPanel.contentView = nil
+            }
         })
+        statusItem?.button?.isHighlighted = false
     }
 
     private func createPanel() {
@@ -113,10 +118,32 @@ final class MenuBarPopoverController: NSObject {
         self.panel = panel
     }
 
+    private func clampedPanelX(_ proposedX: CGFloat, width: CGFloat, screen: NSScreen?) -> CGFloat {
+        guard let visibleFrame = screen?.visibleFrame ?? NSScreen.main?.visibleFrame else {
+            return proposedX
+        }
+
+        let minX = visibleFrame.minX + MenuBarPopoverMetrics.screenEdgePadding
+        let maxX = visibleFrame.maxX - MenuBarPopoverMetrics.screenEdgePadding - width
+
+        guard minX <= maxX else { return proposedX }
+        return min(max(proposedX, minX), maxX)
+    }
+
+    private func statusButtonContainsScreenPoint(_ point: NSPoint) -> Bool {
+        guard let button = statusItem?.button,
+              let window = button.window else { return false }
+
+        let buttonRect = button.convert(button.bounds, to: nil)
+        let screenRect = window.convertToScreen(buttonRect)
+        return screenRect.contains(point)
+    }
+
     private func startEventMonitor() {
-        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+        eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] event in
             DispatchQueue.main.async {
-                self?.closePopover()
+                guard let self, !self.statusButtonContainsScreenPoint(event.locationInWindow) else { return }
+                self.closePopover()
             }
         }
     }

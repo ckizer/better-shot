@@ -25,7 +25,6 @@ targets:
         buildPhase: resources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.bettershot.app
         PRODUCT_NAME: BetterShot
         INFOPLIST_FILE: Resources/Info.plist
         CODE_SIGN_ENTITLEMENTS: Resources/BetterShot.entitlements
@@ -35,5 +34,14 @@ targets:
         ENABLE_HARDENED_RUNTIME: true
         COMBINE_HIDPI_IMAGES: true
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
+      configs:
+        Debug:
+          PRODUCT_BUNDLE_IDENTIFIER: com.bettershot.app.dev
+          PRODUCT_NAME: BetterShot Dev
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: "Developer ID Application: Court Kizer (C5GYCMZY68)"
+          DEVELOPMENT_TEAM: C5GYCMZY68
+        Release:
+          PRODUCT_BUNDLE_IDENTIFIER: com.bettershot.app
     entitlements:
       path: Resources/BetterShot.entitlements

@@ -34,7 +34,7 @@ final class CaptureOrchestrator {
     private func executeCapture(_ action: ShortcutService.Action) async {
         switch action {
         case .region:
-            await captureAndProcess { try await ScreenCapture.shared.captureRegion() }
+            await captureAndProcess { try await ScreenCapture.shared.captureInteractiveRegion() }
         case .fullscreen:
             await captureAndProcess { try await ScreenCapture.shared.captureFullscreen() }
         case .window:

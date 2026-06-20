@@ -5,6 +5,16 @@ All notable changes to Better Shot will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Region window toggle**: Region capture now starts in area selection and supports pressing Space to toggle native window selection, matching macOS screenshot behavior
+
+### Fixed
+
+- **Menu bar popover polish**: Removed the popover arrow, tuned the shadow/ring, gave the menu shadow room to render without clipping, clamped the floating panel to the screen edge, and fixed status-item clicks so an open menu closes instead of reopening
+
 ## [0.3.7] - 2026-06-07
 
 ### Added

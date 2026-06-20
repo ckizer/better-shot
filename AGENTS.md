@@ -3,6 +3,38 @@ name: ui-skills
 description: Opinionated constraints for building better interfaces with agents.
 ---
 
+# BetterShot Agent Rules
+
+## Repo-Specific Rules
+
+- Do not use skills or extra agent workflows in this repository unless the user explicitly requests them.
+- Start every AI response with `😎🔥` followed by the response.
+- BetterShot is primarily a native macOS app. Do not assume Electron, Tauri, or webview architecture for the app.
+- The `bettershot-landing` directory is a separate Next/Tailwind marketing site. Apply frontend rules there, not to SwiftUI/AppKit code.
+
+## Coding Behavior
+
+- Think before coding. State assumptions when the request is ambiguous.
+- Ask before implementing if multiple interpretations would lead to meaningfully different code.
+- Surface tradeoffs. If a simpler approach exists, say so. Push back when warranted.
+- Prefer the simplest solution that fully satisfies the request.
+- Do not add speculative features, abstractions, configurability, or broad error handling unless asked.
+- Keep changes surgical. Touch only files needed for the task.
+- Match existing project style, even when a different style might be personally preferred.
+- Do not refactor adjacent code unless required to complete the task.
+- Remove only unused code created by your own changes.
+- Mention unrelated issues instead of fixing them silently.
+- For multi-step tasks, use a short plan and verify each meaningful step.
+- Prefer tests, builds, type checks, or targeted manual verification when the change has behavior risk.
+- Every changed line should trace back to the user request.
+
+## Documentation / Memory
+
+- If deploying anything significant, document it in `/docs` as its own markdown file so humans and AI agents can reference it later.
+- Keep documentation clear, concise, and useful for frontend engineers when it concerns the landing site.
+- For user-facing app or website changes, update `CHANGELOG.md` or a running list of website changes with a high-level concise note.
+- Update `docs/HANDOFF.md` after meaningful work sessions with what was built, what was decided and why, open questions, and the next slice.
+
 # UI Skills
 
 Opinionated constraints for building better interfaces with agents.

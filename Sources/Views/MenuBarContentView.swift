@@ -2,30 +2,30 @@ import SwiftUI
 
 // MARK: - Panel Root (Arrow + Body)
 
+enum MenuBarPopoverMetrics {
+    static let shadowPadding: CGFloat = 80
+    static let screenEdgePadding: CGFloat = 12
+    static let menuGap: CGFloat = 6
+}
+
 struct MenuBarPanelView: View {
     var dismissPopover: @MainActor () -> Void
     @State private var isVisible = false
 
-    private let arrowWidth: CGFloat = 22
-    private let arrowHeight: CGFloat = 10
     private let panelRadius: CGFloat = 12
+    private let shadowColor = Color(red: 9 / 255, green: 9 / 255, blue: 11 / 255)
 
     var body: some View {
-        VStack(spacing: 0) {
-            PopoverArrow()
-                .fill(Color(nsColor: .windowBackgroundColor))
-                .frame(width: arrowWidth, height: arrowHeight)
-
-            MenuBarContentView(dismissPopover: dismissPopover)
-                .background(Color(nsColor: .windowBackgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: panelRadius, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: panelRadius, style: .continuous)
-                        .strokeBorder(Color.primary.opacity(0.08), lineWidth: 0.5)
-                )
-        }
-        .shadow(color: .black.opacity(0.18), radius: 20, y: 8)
-        .shadow(color: .black.opacity(0.08), radius: 4, y: 2)
+        MenuBarContentView(dismissPopover: dismissPopover)
+            .background(Color(nsColor: .windowBackgroundColor))
+            .clipShape(RoundedRectangle(cornerRadius: panelRadius, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: panelRadius, style: .continuous)
+                    .strokeBorder(shadowColor.opacity(0.10), lineWidth: 1)
+            )
+            .shadow(color: shadowColor.opacity(0.10), radius: 20, y: 20)
+            .shadow(color: .black.opacity(0.06), radius: 4, y: 8)
+            .padding(MenuBarPopoverMetrics.shadowPadding)
         .scaleEffect(isVisible ? 1 : 0.92, anchor: .top)
         .opacity(isVisible ? 1 : 0)
         .blur(radius: isVisible ? 0 : 4)
@@ -34,24 +34,6 @@ struct MenuBarPanelView: View {
                 isVisible = true
             }
         }
-    }
-}
-
-// MARK: - Arrow Shape
-
-private struct PopoverArrow: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        let radius: CGFloat = 2.5
-        path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX - radius, y: rect.minY + radius))
-        path.addQuadCurve(
-            to: CGPoint(x: rect.midX + radius, y: rect.minY + radius),
-            control: CGPoint(x: rect.midX, y: rect.minY)
-        )
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.closeSubpath()
-        return path
     }
 }
 
