@@ -48,6 +48,7 @@ final class PinnedScreenshotController {
 
         let contentView = PinnedScreenshotView(
             image: image,
+            sourceURL: url,
             originalDisplaySize: panelSize,
             onClose: { [weak self, weak panel] in
                 guard let self, let panel else { return }
@@ -80,6 +81,7 @@ final class PinnedScreenshotController {
 /// SwiftUI content view for a single pinned screenshot panel.
 struct PinnedScreenshotView: View {
     let image: NSImage
+    let sourceURL: URL?
     let originalDisplaySize: CGSize
     let onClose: () -> Void
 
@@ -132,9 +134,7 @@ struct PinnedScreenshotView: View {
         // Right-click context menu
         .contextMenu {
             Button("Copy Image") {
-                let pb = NSPasteboard.general
-                pb.clearContents()
-                pb.writeObjects([image])
+                ScreenshotPasteboard.copyImage(image, sourceURL: sourceURL)
             }
             Button("Close") {
                 onClose()

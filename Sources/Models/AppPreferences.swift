@@ -7,6 +7,7 @@ enum AppPreferences {
     private static let appearanceKey = "bs_appAppearance"
     private static let saveDirKey = "bs_saveDirectory"
     private static let copyAfterSaveKey = "bs_copyAfterSave"
+    private static let copyScreenshotsAtRetinaScaleKey = "bs_copyScreenshotsAtRetinaScale"
     private static let playSoundKey = "bs_playSound"
     private static let overlayPositionKey = "bs_overlayPosition"
     private static let overlayDismissDelayKey = "bs_overlayDismissDelay"
@@ -42,6 +43,11 @@ enum AppPreferences {
     static var copyAfterSave: Bool {
         get { UserDefaults.standard.object(forKey: copyAfterSaveKey) as? Bool ?? true }
         set { UserDefaults.standard.set(newValue, forKey: copyAfterSaveKey) }
+    }
+
+    static var copyScreenshotsAtRetinaScale: Bool {
+        get { UserDefaults.standard.object(forKey: copyScreenshotsAtRetinaScaleKey) as? Bool ?? true }
+        set { UserDefaults.standard.set(newValue, forKey: copyScreenshotsAtRetinaScaleKey) }
     }
 
     static var playSound: Bool {

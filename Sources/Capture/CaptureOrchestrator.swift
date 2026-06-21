@@ -58,17 +58,20 @@ final class CaptureOrchestrator {
 
         do {
             guard let url = try await capture() else { return }
+            let pasteScale = pasteScale(for: url)
+            ScreenshotPasteboard.registerPasteScale(pasteScale, for: url)
 
             ScreenCapture.shared.playShutterSound()
 
             let record = HistoryStore.shared.importCapture(from: url)
             if let record {
                 lastCaptureURL = HistoryStore.shared.urlForRecord(record)
+                ScreenshotPasteboard.registerPasteScale(pasteScale, for: lastCaptureURL)
             }
 
             guard let capturedURL = lastCaptureURL else { return }
 
-            await galleryApplyAndSave(capturedURL, recordID: record?.id)
+            await galleryApplyAndSave(capturedURL, recordID: record?.id, pasteScale: pasteScale)
         } catch {
             print("Capture failed: \(error.localizedDescription)")
         }
@@ -108,7 +111,7 @@ final class CaptureOrchestrator {
         }
     }
 
-    private func galleryApplyAndSave(_ url: URL, recordID: UUID? = nil) async {
+    private func galleryApplyAndSave(_ url: URL, recordID: UUID? = nil, pasteScale: CGFloat? = nil) async {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
               let cgImage = CGImageSourceCreateImageAtIndex(source, 0, nil) else { return }
 
@@ -120,6 +123,7 @@ final class CaptureOrchestrator {
         let savedURL = saveImage(rendered)
 
         if let savedURL {
+            ScreenshotPasteboard.registerPasteScale(pasteScale, for: savedURL)
             saveBaseImage(rawURL: url, alongside: savedURL)
 
             if let recordID {
@@ -128,7 +132,7 @@ final class CaptureOrchestrator {
         }
 
         if AppPreferences.copyAfterSave, let savedURL {
-            copyToClipboard(savedURL)
+            ScreenshotPasteboard.copyImage(at: savedURL)
         }
 
         let displayURL = savedURL ?? url
@@ -201,12 +205,10 @@ final class CaptureOrchestrator {
         return url
     }
 
-    private func copyToClipboard(_ url: URL) {
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
-              let cgImage = CGImageSourceCreateImageAtIndex(source, 0, nil) else { return }
-        let nsImage = NSImage(cgImage: cgImage, size: NSSize(width: cgImage.width, height: cgImage.height))
-        let pb = NSPasteboard.general
-        pb.clearContents()
-        pb.writeObjects([nsImage])
+    private func pasteScale(for url: URL) -> CGFloat {
+        if let captureScreen {
+            return max(captureScreen.backingScaleFactor, 1)
+        }
+        return ScreenshotPasteboard.pasteScale(for: url)
     }
 }

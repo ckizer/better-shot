@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Retina paste sizing setting**: Added a General > Capture toggle that makes copied screenshots paste at display-aware Retina logical size by default while preserving full-resolution saved files
 - **Region window toggle**: Region capture now starts in area selection and supports pressing Space to toggle native window selection, matching macOS screenshot behavior
 
 ### Fixed
 
+- **Screenshot paste scale**: Copied screenshots now use display-aware pasteboard sizing so Retina captures paste at 2x logical size while non-Retina external display captures stay at 1x
 - **Menu bar popover polish**: Removed the popover arrow, tuned the shadow/ring, gave the menu shadow room to render without clipping, clamped the floating panel to the screen edge, and fixed status-item clicks so an open menu closes instead of reopening
 
 ## [0.3.7] - 2026-06-07

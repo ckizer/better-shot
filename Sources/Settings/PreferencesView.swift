@@ -70,6 +70,7 @@ struct GeneralSettingsTab: View {
     @AppStorage("bs_appAppearance") private var appAppearanceRaw: String = AppAppearance.system.rawValue
     @AppStorage("bs_saveDirectory") private var saveDir = NSHomeDirectory() + "/Desktop"
     @AppStorage("bs_copyAfterSave") private var copyAfterSave = true
+    @AppStorage("bs_copyScreenshotsAtRetinaScale") private var copyScreenshotsAtRetinaScale = true
     @AppStorage("bs_playSound") private var playSound = true
     @AppStorage("bs_exportFormat") private var exportFormatRaw: String = ExportFormat.png.rawValue
     @AppStorage("bs_exportQuality") private var exportQuality: Double = 0.9
@@ -135,6 +136,7 @@ struct GeneralSettingsTab: View {
 
             Section("Capture") {
                 Toggle("Play shutter sound", isOn: $playSound)
+                Toggle("Paste screenshots at Retina size", isOn: $copyScreenshotsAtRetinaScale)
             }
 
             Section("Default Effects") {
@@ -197,6 +199,7 @@ struct GeneralSettingsTab: View {
                     AppPreferences.applyAppearance()
                     saveDir = NSHomeDirectory() + "/Desktop"
                     copyAfterSave = true
+                    copyScreenshotsAtRetinaScale = true
                     playSound = true
                     exportFormatRaw = ExportFormat.png.rawValue
                     exportQuality = 0.9

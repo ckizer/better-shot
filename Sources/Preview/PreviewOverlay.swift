@@ -263,9 +263,11 @@ struct PreviewCardView: View {
             // Center pill actions
             HStack(spacing: 6) {
                 pillButton("Copy") {
-                    let pb = NSPasteboard.general
-                    pb.clearContents()
-                    pb.writeObjects([image])
+                    if let url = overlay.currentURL {
+                        ScreenshotPasteboard.copyImage(at: url)
+                    } else {
+                        ScreenshotPasteboard.copyImage(image)
+                    }
                     overlay.dismiss()
                 }
                 pillButton("Save") {

@@ -6,6 +6,7 @@ import SwiftUI
 final class EditorModel {
     var sourceImage: CGImage?
     var sourceURL: URL?
+    var sourcePasteScale: CGFloat = 1
     var previewImage: NSImage?
     var imageSize: CGSize = .zero
     var config = BeautifierConfig.default
@@ -99,6 +100,7 @@ final class EditorModel {
     func loadImage(from url: URL) {
         let rawURL = CaptureOrchestrator.resolveRawSource(for: url)
         sourceURL = rawURL
+        sourcePasteScale = ScreenshotPasteboard.pasteScale(for: rawURL)
         guard let source = CGImageSourceCreateWithURL(rawURL as CFURL, nil),
               let image = CGImageSourceCreateImageAtIndex(source, 0, nil) else { return }
         sourceImage = image
