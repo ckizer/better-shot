@@ -1,7 +1,7 @@
 import AppKit
 
 @MainActor
-final class BetterShotDelegate: NSObject, NSApplicationDelegate {
+final class SupremeShotDelegate: NSObject, NSApplicationDelegate {
     private var permissionPollTimer: Timer?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -57,7 +57,7 @@ final class BetterShotDelegate: NSObject, NSApplicationDelegate {
     private static func promptRestart() {
         let alert = NSAlert()
         alert.messageText = "Restart Required"
-        alert.informativeText = "BetterShot needs to restart to activate keyboard shortcut overrides. Restart now?"
+        alert.informativeText = "SupremeShot needs to restart to activate keyboard shortcut overrides. Restart now?"
         alert.alertStyle = .informational
         alert.addButton(withTitle: "Restart")
         alert.addButton(withTitle: "Later")

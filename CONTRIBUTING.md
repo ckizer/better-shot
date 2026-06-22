@@ -1,4 +1,4 @@
-# Contributing to BetterShot
+# Contributing to SupremeShot
 
 Thanks for considering contributing. This guide covers everything you need to get started.
 
@@ -15,7 +15,7 @@ make run
 
 That's it. The Makefile handles everything. No extra tools needed.
 
-> **Alternative**: Open `BetterShot.xcodeproj` in Xcode and press `⌘R`.
+> **Alternative**: Open `SupremeShot.xcodeproj` in Xcode and press `⌘R`.
 
 ### If you modify `project.yml`
 
@@ -58,7 +58,7 @@ Resources/
   Assets.xcassets/       App icon, menu bar icon
   Backgrounds/           Bundled wallpaper and gradient images
   Info.plist
-  BetterShot.entitlements
+  SupremeShot.entitlements
 ```
 
 ### Key files
@@ -197,7 +197,7 @@ Version is tracked in three places (keep them in sync):
 |---|---|
 | `version.json` | `version`, `build` |
 | `project.yml` | `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` |
-| `BetterShot.xcodeproj/project.pbxproj` | `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` (both Debug and Release) |
+| `SupremeShot.xcodeproj/project.pbxproj` | `MARKETING_VERSION`, `CURRENT_PROJECT_VERSION` (both Debug and Release) |
 
 The `CHANGELOG.md` documents what changed in each version.
 

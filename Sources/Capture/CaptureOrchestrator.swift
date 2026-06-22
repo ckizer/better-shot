@@ -15,16 +15,17 @@ final class CaptureOrchestrator {
     private init() {}
 
     func performCapture(_ action: ShortcutService.Action, on screen: NSScreen? = nil) async {
+        let resolvedScreen = screen ?? Self.currentScreen()
         if captureInProgress {
-            pendingCaptures.append((action, screen))
+            pendingCaptures.append((action, resolvedScreen))
             return
         }
         captureInProgress = true
-        captureScreen = screen
+        captureScreen = resolvedScreen
         await executeCapture(action)
         while let (next, nextScreen) = pendingCaptures.first {
             pendingCaptures.removeFirst()
-            captureScreen = nextScreen
+            captureScreen = nextScreen ?? Self.currentScreen()
             await executeCapture(next)
         }
         captureScreen = nil
@@ -153,7 +154,7 @@ final class CaptureOrchestrator {
         let dir = AppPreferences.saveDirectory
         let stamp = Int(Date().timeIntervalSince1970 * 1000)
         let ext = AppPreferences.exportFormat.fileExtension
-        let path = "\(dir)/bettershot_\(stamp).\(ext)"
+        let path = "\(dir)/supremeshot_\(stamp).\(ext)"
         let url = URL(fileURLWithPath: path)
 
         guard let destination = CGImageDestinationCreateWithURL(
@@ -180,7 +181,7 @@ final class CaptureOrchestrator {
 
     private static var baseStorageDir: URL {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let dir = appSupport.appendingPathComponent("BetterShot/bases", isDirectory: true)
+        let dir = appSupport.appendingPathComponent("SupremeShot/bases", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }
@@ -210,5 +211,10 @@ final class CaptureOrchestrator {
             return max(captureScreen.backingScaleFactor, 1)
         }
         return ScreenshotPasteboard.pasteScale(for: url)
+    }
+
+    private static func currentScreen() -> NSScreen? {
+        let mouseLocation = NSEvent.mouseLocation
+        return NSScreen.screens.first { $0.frame.contains(mouseLocation) } ?? NSScreen.main
     }
 }

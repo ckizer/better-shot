@@ -43,67 +43,20 @@ struct MenuBarContentView: View {
     var dismissPopover: @MainActor () -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            captureGrid
-                .padding(.horizontal, 10)
-                .padding(.top, 10)
-                .padding(.bottom, 8)
-
-            TrayDivider()
-
-            utilityGrid
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-
-            if PinnedScreenshotController.shared.hasPinnedWindows {
-                TrayDivider()
-
-                TrayFullWidthButton(title: "Unpin All", icon: "pin.slash") {
-                    PinnedScreenshotController.shared.unpinAll()
-                    dismissPopover()
-                }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 4)
-            }
-
-            TrayDivider()
-
-            footerGrid
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-
-            versionLabel
-                .padding(.bottom, 8)
-        }
-        .frame(width: 290)
-    }
-
-    // MARK: - Capture Grid
-
-    private var captureGrid: some View {
-        let columns = [
-            GridItem(.flexible(), spacing: 6),
-            GridItem(.flexible(), spacing: 6),
-        ]
-
-        return LazyVGrid(columns: columns, spacing: 6) {
-            TrayGridButton(title: "Region", icon: "rectangle.dashed", shortcut: "\u{2318}4") {
+        VStack(spacing: MenuRowStyle.gap) {
+            TrayRowButton(title: "Region or Window", iconAsset: "MenuIconRegion", shortcut: "\u{2318}4") {
                 dismissAndRun(.region)
             }
 
-            TrayGridButton(title: "Screen", icon: "desktopcomputer", shortcut: "\u{2318}3") {
+            TrayRowButton(title: "Entire Screen", iconAsset: "MenuIconScreen", shortcut: "\u{2318}3") {
                 dismissAndRun(.fullscreen)
             }
 
-            TrayGridButton(title: "Window", icon: "macwindow") {
-                dismissAndRun(.window)
+            TrayRowButton(title: "Capture Text - OCR", iconAsset: "MenuIconOCR", shortcut: "\u{2318}O") {
+                dismissAndRun(.ocr)
             }
 
-            TrayGridButton(title: "Pick Color", icon: "eyedropper") {
-                dismissAndRun(.colorPicker)
-            }
-
-            TrayGridMenu(title: "Record", icon: "record.circle", menuItems: [
+            TrayRowMenu(title: "Record", iconAsset: "MenuIconRecord", shortcut: "\u{2318}\u{21E7}2", menuItems: [
                 TrayMenuItem(title: "Full Screen", icon: "desktopcomputer") {
                     nonisolated(unsafe) let screen = originScreen
                     dismissPopover()
@@ -121,10 +74,31 @@ struct MenuBarContentView: View {
                     }
                 },
             ])
+
+            MenuDivider()
+
+            TrayRowMenu(title: "Recents", iconAsset: "MenuIconRecents", background: nil, trailingChevronAsset: "MenuIconChevron", menuItems: recentMenuItems())
+
+            if PinnedScreenshotController.shared.hasPinnedWindows {
+                TrayRowButton(title: "Unpin All", systemIcon: "pin.slash") {
+                    PinnedScreenshotController.shared.unpinAll()
+                    dismissPopover()
+                }
+            }
+
+            TrayRowButton(title: "Settings", iconAsset: "MenuIconSettings", shortcut: "\u{2318},", background: nil) {
+                openSettings()
+            }
+
+            TrayRowButton(title: "Quit SupremeShot", shortcut: "\u{2318}Q", background: nil) {
+                NSApplication.shared.terminate(nil)
+            }
         }
+        .padding(MenuRowStyle.containerPadding)
+        .frame(width: 292)
     }
 
-    // MARK: - Utility Grid
+    // MARK: - History
 
     private var recentScreenshots: [CaptureRecord] {
         HistoryStore.shared.records.filter { $0.kind == .screenshot }
@@ -132,57 +106,6 @@ struct MenuBarContentView: View {
 
     private var recentRecordings: [CaptureRecord] {
         HistoryStore.shared.records.filter { $0.kind == .recording }
-    }
-
-    private var utilityGrid: some View {
-        let columns = [
-            GridItem(.flexible(), spacing: 6),
-            GridItem(.flexible(), spacing: 6),
-        ]
-
-        return LazyVGrid(columns: columns, spacing: 6) {
-            TrayGridButton(title: "OCR", icon: "doc.text.viewfinder", shortcut: "\u{2318}O") {
-                dismissAndRun(.ocr)
-            }
-
-            TrayGridMenu(title: "Recent", icon: "clock.arrow.circlepath", menuItems: recentMenuItems())
-        }
-    }
-
-    // MARK: - Footer
-
-    private var footerGrid: some View {
-        let columns = [
-            GridItem(.flexible(), spacing: 6),
-            GridItem(.flexible(), spacing: 6),
-        ]
-
-        return LazyVGrid(columns: columns, spacing: 6) {
-            TrayGridButton(title: "Settings", icon: "gearshape", shortcut: "\u{2318},") {
-                openSettings()
-            }
-
-            TrayGridButton(title: "Quit", icon: "power", shortcut: "\u{2318}Q") {
-                NSApplication.shared.terminate(nil)
-            }
-        }
-    }
-
-    // MARK: - Version
-
-    private var versionLabel: some View {
-        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
-        return HStack(spacing: 4) {
-            Text("Version \(version)")
-                .font(.system(size: 10))
-                .foregroundStyle(.quaternary)
-
-            if AppUpdater.shared.latestAvailableVersion != nil {
-                Circle()
-                    .fill(.blue)
-                    .frame(width: 6, height: 6)
-            }
-        }
     }
 
     // MARK: - Actions
@@ -278,63 +201,144 @@ struct MenuBarContentView: View {
 
 }
 
-// MARK: - Grid Button
+// MARK: - Row Style
 
-struct TrayGridButton: View {
+private enum MenuRowStyle {
+    static let containerPadding: CGFloat = 8
+    static let gap: CGFloat = 8
+    static let rowHeight: CGFloat = 40
+    static let cornerRadius: CGFloat = 10
+    static let iconSize: CGFloat = 24
+    static let horizontalPadding: CGFloat = 10
+    static let iconTextGap: CGFloat = 10
+    static let textSize: CGFloat = 14
+    static let textColor = Color(red: 32 / 255, green: 32 / 255, blue: 32 / 255)
+    static let shortcutOpacity: Double = 0.40
+    static let background = Color(red: 231 / 255, green: 231 / 255, blue: 237 / 255)
+    static let hoverBackground = Color(red: 185 / 255, green: 185 / 255, blue: 190 / 255)
+    static let nsBackground = NSColor(red: 231 / 255, green: 231 / 255, blue: 237 / 255, alpha: 1)
+    static let nsHoverBackground = NSColor(red: 185 / 255, green: 185 / 255, blue: 190 / 255, alpha: 1)
+    static let dividerHeight: CGFloat = 17
+    static let chevronSize = CGSize(width: 12.5, height: 7)
+}
+
+private enum MenuIconSpec {
+    static func glyphSize(for assetName: String) -> CGSize {
+        switch assetName {
+        case "MenuIconRegion":
+            CGSize(width: 18, height: 18)
+        case "MenuIconScreen":
+            CGSize(width: 19.47, height: 17.33)
+        case "MenuIconOCR":
+            CGSize(width: 22, height: 20.29)
+        case "MenuIconRecord":
+            CGSize(width: 19.47, height: 16.67)
+        case "MenuIconRecents", "MenuIconSettings", "MenuIconQuit":
+            CGSize(width: 19.34, height: 19.34)
+        case "MenuIconChevron":
+            MenuRowStyle.chevronSize
+        default:
+            CGSize(width: MenuRowStyle.iconSize, height: MenuRowStyle.iconSize)
+        }
+    }
+}
+
+// MARK: - Row Button
+
+struct TrayRowButton: View {
     let title: String
-    let icon: String
+    var iconAsset: String? = nil
+    var systemIcon: String? = nil
     var shortcut: String? = nil
+    var background: Color? = MenuRowStyle.background
     let action: () -> Void
 
     @State private var isHovered = false
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 6) {
-                Image(systemName: icon)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(.primary.opacity(0.7))
-                    .frame(width: 16)
+            HStack(spacing: MenuRowStyle.iconTextGap) {
+                rowIcon
 
                 Text(title)
-                    .font(.system(size: 12, weight: .medium))
+                    .font(.system(size: MenuRowStyle.textSize, weight: .medium))
+                    .foregroundStyle(MenuRowStyle.textColor)
                     .lineLimit(1)
 
-                Spacer(minLength: 2)
+                Spacer(minLength: 8)
 
                 if let shortcut {
                     Text(shortcut)
-                        .font(.system(size: 9, weight: .medium, design: .rounded))
-                        .foregroundStyle(.primary.opacity(0.25))
+                        .font(.system(size: MenuRowStyle.textSize, weight: .medium))
+                        .foregroundStyle(MenuRowStyle.textColor.opacity(MenuRowStyle.shortcutOpacity))
+                        .lineLimit(1)
                 }
             }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 8)
+            .padding(.horizontal, MenuRowStyle.horizontalPadding)
+            .frame(height: MenuRowStyle.rowHeight)
             .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isHovered ? Color.primary.opacity(0.15) : Color.primary.opacity(0.08))
+                RoundedRectangle(cornerRadius: MenuRowStyle.cornerRadius, style: .continuous)
+                    .fill(rowBackground)
             )
-            .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .contentShape(RoundedRectangle(cornerRadius: MenuRowStyle.cornerRadius, style: .continuous))
         }
         .buttonStyle(.plain)
         .onHover { isHovered = $0 }
     }
+
+    private var rowBackground: Color {
+        guard let background else { return .clear }
+        return isHovered ? MenuRowStyle.hoverBackground : background
+    }
+
+    @ViewBuilder
+    private var rowIcon: some View {
+        if let iconAsset {
+            let glyphSize = MenuIconSpec.glyphSize(for: iconAsset)
+            ZStack {
+                Image(iconAsset)
+                    .resizable()
+                    .renderingMode(.template)
+                    .foregroundStyle(MenuRowStyle.textColor)
+                    .frame(width: glyphSize.width, height: glyphSize.height)
+            }
+            .frame(width: MenuRowStyle.iconSize, height: MenuRowStyle.iconSize)
+        } else if let systemIcon {
+            Image(systemName: systemIcon)
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(MenuRowStyle.textColor)
+                .frame(width: MenuRowStyle.iconSize, height: MenuRowStyle.iconSize)
+        }
+    }
 }
 
-// MARK: - Grid Menu (dropdown matching grid button style via NSMenu)
+// MARK: - Row Menu (dropdown matching row style via NSMenu)
 
-struct TrayGridMenu: NSViewRepresentable {
+struct TrayRowMenu: NSViewRepresentable {
     let title: String
-    let icon: String
+    let iconAsset: String
+    var shortcut: String? = nil
+    var background: Color? = MenuRowStyle.background
+    var trailingChevronAsset: String? = nil
     let menuItems: [TrayMenuItem]
 
-    func makeNSView(context: Context) -> TrayGridMenuButton {
-        let button = TrayGridMenuButton(title: title, icon: icon, menuItems: menuItems)
+    func makeNSView(context: Context) -> TrayRowMenuButton {
+        let button = TrayRowMenuButton(
+            title: title,
+            iconAsset: iconAsset,
+            shortcut: shortcut,
+            backgroundColor: background == nil ? nil : NSColor(red: 231 / 255, green: 231 / 255, blue: 237 / 255, alpha: 1),
+            trailingChevronAsset: trailingChevronAsset,
+            menuItems: menuItems
+        )
         return button
     }
 
-    func updateNSView(_ nsView: TrayGridMenuButton, context: Context) {
+    func updateNSView(_ nsView: TrayRowMenuButton, context: Context) {
         nsView.menuItems = menuItems
+        nsView.shortcut = shortcut
+        nsView.backgroundColor = background == nil ? nil : MenuRowStyle.nsBackground
+        nsView.trailingChevronAssetName = trailingChevronAsset
     }
 }
 
@@ -352,16 +356,28 @@ struct TrayMenuItem {
     }
 }
 
-final class TrayGridMenuButton: NSView {
+final class TrayRowMenuButton: NSView {
     var menuItems: [TrayMenuItem]
+    var backgroundColor: NSColor? {
+        didSet { needsDisplay = true }
+    }
+    var shortcut: String? {
+        didSet { needsDisplay = true }
+    }
+    var trailingChevronAssetName: String? {
+        didSet { needsDisplay = true }
+    }
     private let titleText: String
-    private let iconName: String
+    private let iconAssetName: String
     private var isHovered = false
     private var trackingArea: NSTrackingArea?
 
-    init(title: String, icon: String, menuItems: [TrayMenuItem]) {
+    init(title: String, iconAsset: String, shortcut: String?, backgroundColor: NSColor?, trailingChevronAsset: String?, menuItems: [TrayMenuItem]) {
         self.titleText = title
-        self.iconName = icon
+        self.iconAssetName = iconAsset
+        self.shortcut = shortcut
+        self.backgroundColor = backgroundColor
+        self.trailingChevronAssetName = trailingChevronAsset
         self.menuItems = menuItems
         super.init(frame: .zero)
     }
@@ -370,7 +386,7 @@ final class TrayGridMenuButton: NSView {
     required init?(coder: NSCoder) { fatalError() }
 
     override var intrinsicContentSize: NSSize {
-        NSSize(width: NSView.noIntrinsicMetric, height: 32)
+        NSSize(width: NSView.noIntrinsicMetric, height: MenuRowStyle.rowHeight)
     }
 
     override func updateTrackingAreas() {
@@ -448,46 +464,52 @@ final class TrayGridMenuButton: NSView {
     }
 
     override func draw(_ dirtyRect: NSRect) {
-        let bgColor: NSColor = isHovered
-            ? NSColor.labelColor.withAlphaComponent(0.15)
-            : NSColor.labelColor.withAlphaComponent(0.08)
+        if let backgroundColor {
+            let bgColor = isHovered ? MenuRowStyle.nsHoverBackground : backgroundColor
+            let path = NSBezierPath(roundedRect: bounds, xRadius: MenuRowStyle.cornerRadius, yRadius: MenuRowStyle.cornerRadius)
+            bgColor.setFill()
+            path.fill()
+        }
 
-        let path = NSBezierPath(roundedRect: bounds, xRadius: 8, yRadius: 8)
-        bgColor.setFill()
-        path.fill()
-
-        let iconColor = NSColor.labelColor.withAlphaComponent(0.7)
-        let iconConfig = NSImage.SymbolConfiguration(pointSize: 12, weight: .medium)
-
-        let iconX: CGFloat = 8
-        let textX: CGFloat = 30
-        let chevronWidth: CGFloat = 20
+        let textColor = NSColor(red: 32 / 255, green: 32 / 255, blue: 32 / 255, alpha: 1)
+        let iconX = MenuRowStyle.horizontalPadding
+        let textX = iconX + MenuRowStyle.iconSize + MenuRowStyle.iconTextGap
         let centerY = bounds.midY
 
-        if let img = NSImage(systemSymbolName: iconName, accessibilityDescription: nil)?
-            .withSymbolConfiguration(iconConfig) {
-            let tinted = tintImage(img, color: iconColor)
-            let imgSize = tinted.size
-            let imgRect = NSRect(x: iconX, y: centerY - imgSize.height / 2, width: imgSize.width, height: imgSize.height)
+        if let img = NSImage(named: iconAssetName) {
+            let tinted = tintImage(img, color: textColor)
+            let glyphSize = MenuIconSpec.glyphSize(for: iconAssetName)
+            let imgRect = NSRect(
+                x: iconX + (MenuRowStyle.iconSize - glyphSize.width) / 2,
+                y: centerY - glyphSize.height / 2,
+                width: glyphSize.width,
+                height: glyphSize.height
+            )
             tinted.draw(in: imgRect)
         }
 
         let attrs: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: 12, weight: .medium),
-            .foregroundColor: NSColor.labelColor,
+            .font: NSFont.systemFont(ofSize: MenuRowStyle.textSize, weight: .medium),
+            .foregroundColor: textColor,
         ]
         let textSize = (titleText as NSString).size(withAttributes: attrs)
         let textPoint = NSPoint(x: textX, y: centerY - textSize.height / 2)
         (titleText as NSString).draw(at: textPoint, withAttributes: attrs)
 
-        let chevronColor = NSColor.labelColor.withAlphaComponent(0.25)
-        let chevronConfig = NSImage.SymbolConfiguration(pointSize: 8, weight: .bold)
-        if let chevron = NSImage(systemSymbolName: "chevron.down", accessibilityDescription: nil)?
-            .withSymbolConfiguration(chevronConfig) {
-            let tinted = tintImage(chevron, color: chevronColor)
-            let chevronSize = tinted.size
+        if let shortcut {
+            let shortcutAttrs: [NSAttributedString.Key: Any] = [
+                .font: NSFont.systemFont(ofSize: MenuRowStyle.textSize, weight: .medium),
+                .foregroundColor: textColor.withAlphaComponent(0.40),
+            ]
+            let shortcutSize = (shortcut as NSString).size(withAttributes: shortcutAttrs)
+            let shortcutPoint = NSPoint(x: bounds.maxX - MenuRowStyle.horizontalPadding - shortcutSize.width, y: centerY - shortcutSize.height / 2)
+            (shortcut as NSString).draw(at: shortcutPoint, withAttributes: shortcutAttrs)
+        } else if let trailingChevronAssetName, let img = NSImage(named: trailingChevronAssetName) {
+            let chevronColor = textColor.withAlphaComponent(0.40)
+            let tinted = tintImage(img, color: chevronColor)
+            let chevronSize = MenuIconSpec.glyphSize(for: trailingChevronAssetName)
             let chevronRect = NSRect(
-                x: bounds.maxX - chevronWidth,
+                x: bounds.maxX - MenuRowStyle.horizontalPadding - chevronSize.width,
                 y: centerY - chevronSize.height / 2,
                 width: chevronSize.width,
                 height: chevronSize.height
@@ -508,46 +530,12 @@ final class TrayGridMenuButton: NSView {
     }
 }
 
-// MARK: - Full Width Button
-
-private struct TrayFullWidthButton: View {
-    let title: String
-    let icon: String
-    let action: () -> Void
-
-    @State private var isHovered = false
-
+private struct MenuDivider: View {
     var body: some View {
-        Button(action: action) {
-            HStack(spacing: 6) {
-                Image(systemName: icon)
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundStyle(.primary.opacity(0.7))
-                    .frame(width: 16)
-
-                Text(title)
-                    .font(.system(size: 12, weight: .medium))
-
-                Spacer()
-            }
-            .padding(.horizontal, 8)
-            .padding(.vertical, 8)
-            .background(
-                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isHovered ? Color.primary.opacity(0.15) : Color.primary.opacity(0.08))
-            )
-            .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-        }
-        .buttonStyle(.plain)
-        .onHover { isHovered = $0 }
-    }
-}
-
-// MARK: - Divider
-
-private struct TrayDivider: View {
-    var body: some View {
-        Divider()
-            .padding(.horizontal, 12)
+        Rectangle()
+            .fill(MenuRowStyle.background)
+            .frame(height: 1)
+            .frame(maxWidth: .infinity)
+            .frame(height: MenuRowStyle.dividerHeight)
     }
 }

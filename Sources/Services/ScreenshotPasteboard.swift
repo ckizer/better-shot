@@ -34,7 +34,12 @@ enum ScreenshotPasteboard {
         }
 
         guard let imageSize = imageSize ?? imagePixelSize(at: url) else { return 1 }
-        return inferredScale(forPixelSize: imageSize)
+        let inferredScale = inferredScale(forPixelSize: imageSize)
+        if inferredScale > 1 {
+            return inferredScale
+        }
+
+        return max(NSScreen.main?.backingScaleFactor ?? 1, 1)
     }
 
     @discardableResult

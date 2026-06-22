@@ -3,13 +3,13 @@ name: ui-skills
 description: Opinionated constraints for building better interfaces with agents.
 ---
 
-# BetterShot Agent Rules
+# SupremeShot Agent Rules
 
 ## Repo-Specific Rules
 
 - Do not use skills or extra agent workflows in this repository unless the user explicitly requests them.
 - Start every AI response with `😎🔥` followed by the response.
-- BetterShot is primarily a native macOS app. Do not assume Electron, Tauri, or webview architecture for the app.
+- SupremeShot is primarily a native macOS app. Do not assume Electron, Tauri, or webview architecture for the app.
 - The `bettershot-landing` directory is a separate Next/Tailwind marketing site. Apply frontend rules there, not to SwiftUI/AppKit code.
 
 ## Coding Behavior

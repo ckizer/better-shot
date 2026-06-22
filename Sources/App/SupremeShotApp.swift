@@ -1,8 +1,8 @@
 import SwiftUI
 
 @main
-struct BetterShotApp: App {
-    @NSApplicationDelegateAdaptor(BetterShotDelegate.self) var delegate
+struct SupremeShotApp: App {
+    @NSApplicationDelegateAdaptor(SupremeShotDelegate.self) var delegate
 
     var body: some Scene {
         Settings {

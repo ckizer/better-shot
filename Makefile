@@ -1,4 +1,4 @@
-# BetterShot Makefile
+# SupremeShot Makefile
 # Usage:
 #   make build        — Debug build
 #   make release      — Release build
@@ -10,15 +10,15 @@
 #   make version      — Print current version
 #   make ship         — Signed release: build, sign, notarize, DMG (both architectures)
 
-SCHEME       = BetterShot
-PROJECT      = BetterShot.xcodeproj
+SCHEME       = SupremeShot
+PROJECT      = SupremeShot.xcodeproj
 CONFIG_DEBUG = Debug
 CONFIG_REL   = Release
 DERIVED_DIR  = .build
-APP_DEBUG    = $(DERIVED_DIR)/Build/Products/$(CONFIG_DEBUG)/$(SCHEME).app
+APP_DEBUG    = $(DERIVED_DIR)/Build/Products/$(CONFIG_DEBUG)/SupremeShot Dev.app
 APP_RELEASE  = $(DERIVED_DIR)/Build/Products/$(CONFIG_REL)/$(SCHEME).app
 VERSION     := $(shell python3 -c "import json; print(json.load(open('version.json'))['version'])")
-DMG_NAME     = BetterShot-$(VERSION).dmg
+DMG_NAME     = SupremeShot-$(VERSION).dmg
 DMG_DIR      = release
 
 .PHONY: build release run dmg clean lint test-build version ship help
@@ -47,7 +47,7 @@ release: ## Release build (unsigned)
 	@echo "==> $(APP_RELEASE)"
 
 run: build ## Build and launch (debug)
-	@echo "==> Launching BetterShot..."
+	@echo "==> Launching SupremeShot..."
 	@open "$(APP_DEBUG)"
 
 dmg: release ## Create unsigned DMG for local testing
@@ -55,7 +55,7 @@ dmg: release ## Create unsigned DMG for local testing
 	@mkdir -p $(DMG_DIR)/staging
 	@cp -R "$(APP_RELEASE)" $(DMG_DIR)/staging/
 	@ln -sf /Applications $(DMG_DIR)/staging/Applications
-	@hdiutil create -volname "BetterShot" \
+	@hdiutil create -volname "SupremeShot" \
 		-srcfolder $(DMG_DIR)/staging \
 		-ov -format UDZO \
 		"$(DMG_DIR)/$(DMG_NAME)" 2>/dev/null

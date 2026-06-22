@@ -1,11 +1,23 @@
 # Changelog
 
-All notable changes to Better Shot will be documented in this file.
+All notable changes to SupremeShot will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Changed
+
+- **Application rename**: Renamed the native app, Xcode target/scheme/product, bundle identifiers, entitlements path, app entry types, user-facing strings, logs, file prefixes, and support directories to SupremeShot
+- **Menu bar dropdown redesign**: Rebuilt the menu bar popover as a single-row list matching the supplied Figma design, with Figma SVG icons, filled capture rows, transparent utility rows, divider, and shortcut text opacity
+- **Menu bar dropdown polish**: Removed the Quit leading icon, added the Recents chevron asset, tightened the divider section to 17pt, and made filled-row hover backgrounds 20% darker
+- **About credits**: Updated the About tab credits to Court Kizer and changed the X link to `@bdoma`
+- **App icon**: Replaced the macOS app icon catalog with sizes generated from the new Icon Composer export
+- **Release notarization**: Added a `make ship` release script for Developer ID signed, notarized, stapled macOS DMGs
+- **Version bump**: Updated the app marketing version to 0.4.0
+- **Menu bar icon**: Replaced the menu bar status icon with the new camera asset
+- **Debug launch path**: Updated `make run` to launch `SupremeShot Dev.app`
 
 ### Added
 
@@ -15,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Screenshot paste scale**: Copied screenshots now use display-aware pasteboard sizing so Retina captures paste at 2x logical size while non-Retina external display captures stay at 1x
+- **Shortcut capture scale**: Global shortcut captures now resolve the originating screen from the keyboard event location and avoid falling back to 1x paste sizing for Retina region captures
 - **Menu bar popover polish**: Removed the popover arrow, tuned the shadow/ring, gave the menu shadow room to render without clipping, clamped the floating panel to the screen edge, and fixed status-item clicks so an open menu closes instead of reopening
 
 ## [0.3.7] - 2026-06-07
@@ -181,7 +194,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Menu bar redesigned**: Custom `NSPanel` popover with arrow, 2-column grid buttons (Region, Screen, Window, Pick Color), screenshot mode toggle (Editor/Gallery), utility grid (OCR, Recent Captures), and footer grid (Settings, Quit). Shortcut badges on each button
 - **About page redesigned**: Left-aligned sectioned layout (Updates, Project, Credits) with horizontal icon+title header. Includes GitHub and X links
 - **Settings window enlarged**: 680×560 (was 620×440) so Default Effects preview and sliders are visible without scrolling
-- **Settings window title**: Shortened to "Settings" (was "BetterShot Settings") to prevent title bar truncation
+- **Settings window title**: Shortened to "Settings" (was "SupremeShot Settings") to prevent title bar truncation
 - **Toast notifications generalized**: `ToastWindow` now accepts a custom title (was hardcoded "Saved") and supports SF Symbol icons alongside app icons
 - **Color picker feedback**: Replaced the cursor-anchored dark HUD panel with a standard toast notification matching the app's toast style
 - **Editor canvas rewritten**: SwiftUI-native rendering with `CanvasBackgroundView` and `CanvasScreenshotView` instead of CGContext re-renders. `UnevenRoundedRectangle` for per-corner radius clipping
@@ -272,7 +285,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Performance optimizations**: Cached font family list (static lazy), TransparencyGrid rasterized via `.drawingGroup()`, arrow hit-test sampling halved (32→16 points), text style dirty-check guards redundant `setAttributes` calls, GPU memory cleanup after blur export
 - Version bumped to 0.3.0
 - Deployment target remains macOS 14.0
-- Simplified BetterShotDelegate — removed all video recording callback and frame extraction code
+- Simplified SupremeShotDelegate — removed all video recording callback and frame extraction code
 
 ### Removed
 

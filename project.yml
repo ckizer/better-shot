@@ -1,6 +1,6 @@
-name: BetterShot
+name: SupremeShot
 options:
-  bundleIdPrefix: com.bettershot
+  bundleIdPrefix: com.supremeshot
   deploymentTarget:
     macOS: "14.0"
   xcodeVersion: "16.0"
@@ -13,7 +13,7 @@ settings:
     ENABLE_USER_SCRIPT_SANDBOXING: false
 
 targets:
-  BetterShot:
+  SupremeShot:
     type: application
     platform: macOS
     sources:
@@ -25,10 +25,10 @@ targets:
         buildPhase: resources
     settings:
       base:
-        PRODUCT_NAME: BetterShot
+        PRODUCT_NAME: SupremeShot
         INFOPLIST_FILE: Resources/Info.plist
-        CODE_SIGN_ENTITLEMENTS: Resources/BetterShot.entitlements
-        MARKETING_VERSION: "0.3.7"
+        CODE_SIGN_ENTITLEMENTS: Resources/SupremeShot.entitlements
+        MARKETING_VERSION: "0.4.0"
         CURRENT_PROJECT_VERSION: "10"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_HARDENED_RUNTIME: true
@@ -36,12 +36,12 @@ targets:
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
       configs:
         Debug:
-          PRODUCT_BUNDLE_IDENTIFIER: com.bettershot.app.dev
-          PRODUCT_NAME: BetterShot Dev
+          PRODUCT_BUNDLE_IDENTIFIER: com.supremeshot.app.dev
+          PRODUCT_NAME: SupremeShot Dev
           CODE_SIGN_STYLE: Manual
           CODE_SIGN_IDENTITY: "Developer ID Application: Court Kizer (C5GYCMZY68)"
           DEVELOPMENT_TEAM: C5GYCMZY68
         Release:
-          PRODUCT_BUNDLE_IDENTIFIER: com.bettershot.app
+          PRODUCT_BUNDLE_IDENTIFIER: com.supremeshot.app
     entitlements:
-      path: Resources/BetterShot.entitlements
+      path: Resources/SupremeShot.entitlements

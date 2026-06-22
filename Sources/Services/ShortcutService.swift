@@ -48,7 +48,7 @@ final class ShortcutService {
         unregisterAll()
 
         guard Self.hasAccessibilityPermission else {
-            print("BetterShot: No accessibility permission, skipping event tap registration")
+            print("SupremeShot: No accessibility permission, skipping event tap registration")
             return
         }
 
@@ -62,7 +62,7 @@ final class ShortcutService {
             callback: ShortcutService.eventTapCallback,
             userInfo: nil
         ) else {
-            print("BetterShot: Failed to create event tap — app may need a restart after granting Accessibility permission")
+            print("SupremeShot: Failed to create event tap — app may need a restart after granting Accessibility permission")
             return
         }
 
@@ -73,7 +73,7 @@ final class ShortcutService {
         self.eventTap = tap
         self.runLoopSource = source
         Self.cacheShortcuts()
-        print("BetterShot: Event tap registered successfully — keyboard shortcuts active")
+        print("SupremeShot: Event tap registered successfully — keyboard shortcuts active")
     }
 
     private static func cacheShortcuts() {
@@ -154,8 +154,9 @@ final class ShortcutService {
         for (action, shortcut) in cachedShortcuts {
             guard shortcut.enabled else { continue }
             if keyCode == shortcut.keyCode && carbonMods == shortcut.modifiers {
-                let mouseScreen = NSScreen.screens.first { $0.frame.contains(NSEvent.mouseLocation) }
+                let eventLocation = event.location
                 Task { @MainActor in
+                    let mouseScreen = ShortcutService.screen(containing: eventLocation)
                     if action == .recording {
                         if ScreenRecordingManager.shared.isRecording {
                             return
@@ -173,5 +174,12 @@ final class ShortcutService {
         }
 
         return Unmanaged.passUnretained(event)
+    }
+
+    @MainActor
+    private static func screen(containing point: CGPoint) -> NSScreen? {
+        NSScreen.screens.first { $0.frame.contains(point) }
+            ?? NSScreen.screens.first { $0.frame.contains(NSEvent.mouseLocation) }
+            ?? NSScreen.main
     }
 }

@@ -149,11 +149,11 @@ final class AppUpdater {
                 downloadTask.resume()
             }
 
-            let dmgDir = FileManager.default.temporaryDirectory.appendingPathComponent("BetterShotUpdate")
+            let dmgDir = FileManager.default.temporaryDirectory.appendingPathComponent("SupremeShotUpdate")
             try? FileManager.default.removeItem(at: dmgDir)
             try FileManager.default.createDirectory(at: dmgDir, withIntermediateDirectories: true)
 
-            let dmgPath = dmgDir.appendingPathComponent("BetterShot-\(version).dmg")
+            let dmgPath = dmgDir.appendingPathComponent("SupremeShot-\(version).dmg")
             if FileManager.default.fileExists(atPath: dmgPath.path) {
                 try FileManager.default.removeItem(at: dmgPath)
             }

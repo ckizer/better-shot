@@ -1,4 +1,4 @@
-# BetterShot
+# SupremeShot
 
 [![macOS](https://img.shields.io/badge/macOS-14.0+-black.svg)](https://github.com/KartikLabhshetwar/better-shot)
 [![License](https://img.shields.io/badge/license-BSD%203--Clause-green.svg)](LICENSE)
@@ -60,14 +60,14 @@ Rectangles, filled rectangles, ellipses, lines, curved arrows, freehand, text, n
 ### Homebrew
 
 ```bash
-brew install --cask bettershot
+brew install --cask supremeshot
 ```
 
 ### Download
 
 1. Go to [Releases](https://github.com/KartikLabhshetwar/better-shot/releases)
 2. Download the latest `.dmg` for your architecture (Apple Silicon or Intel)
-3. Open the DMG, drag BetterShot to Applications
+3. Open the DMG, drag SupremeShot to Applications
 4. Launch and grant permissions when prompted
 
 ### Build from source
@@ -82,7 +82,7 @@ This builds a debug version and launches it. See [all make commands](#make-comma
 
 ### Permissions
 
-BetterShot needs two macOS permissions on first launch:
+SupremeShot needs two macOS permissions on first launch:
 
 1. **Screen Recording** — System Settings > Privacy & Security > Screen Recording
 2. **Accessibility** — System Settings > Privacy & Security > Accessibility
@@ -91,7 +91,7 @@ Screen Recording lets the app capture your screen. Accessibility lets it overrid
 
 ## Usage
 
-1. Launch BetterShot — it appears in your **menu bar** (top right of screen)
+1. Launch SupremeShot — it appears in your **menu bar** (top right of screen)
 2. Use a keyboard shortcut or click a capture action from the menu
 3. The floating preview appears — **click it to open the editor**
 4. Adjust background, effects, and add annotations

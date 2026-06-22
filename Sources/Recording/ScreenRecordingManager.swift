@@ -24,8 +24,8 @@ final class ScreenRecordingManager: NSObject {
     private var timer: Timer?
     nonisolated(unsafe) private var _streamSession: RecordingSession?
 
-    private let videoQueue = DispatchQueue(label: "com.bettershot.recording.video", qos: .userInitiated)
-    private let audioQueue = DispatchQueue(label: "com.bettershot.recording.audio", qos: .userInteractive)
+    private let videoQueue = DispatchQueue(label: "com.supremeshot.recording.video", qos: .userInitiated)
+    private let audioQueue = DispatchQueue(label: "com.supremeshot.recording.audio", qos: .userInteractive)
 
     private override init() { super.init() }
 
@@ -153,7 +153,7 @@ final class ScreenRecordingManager: NSObject {
 
         let dir = AppPreferences.saveDirectory
         let stamp = Int(Date().timeIntervalSince1970 * 1000)
-        let path = "\(dir)/bettershot_\(stamp).mp4"
+        let path = "\(dir)/supremeshot_\(stamp).mp4"
         let url = URL(fileURLWithPath: path)
         outputURL = url
 

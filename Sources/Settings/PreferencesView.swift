@@ -1166,7 +1166,7 @@ struct AboutTab: View {
                     }
 
                     VStack(alignment: .leading, spacing: 3) {
-                        Text("BetterShot")
+                        Text("SupremeShot")
                             .font(.system(size: 20, weight: .bold))
 
                         Text("Version \(version)")
@@ -1188,7 +1188,7 @@ struct AboutTab: View {
                 // Project section
                 aboutSection("Project") {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("BetterShot is an open-source screenshot tool for capturing, editing and beautifying screenshots on macOS.")
+                        Text("SupremeShot is an open-source screenshot tool for capturing, editing and beautifying screenshots on macOS.")
                             .font(.system(size: 12))
                             .foregroundStyle(.secondary)
                             .lineSpacing(2)
@@ -1201,13 +1201,13 @@ struct AboutTab: View {
                 // Credits section
                 aboutSection("Credits") {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Built by Kartik Labhshetwar")
+                        Text("Built by Court Kizer")
                             .font(.system(size: 12))
                             .foregroundStyle(.secondary)
 
-                        Link(destination: URL(string: "https://x.com/code_kartik")!) {
+                        Link(destination: URL(string: "https://x.com/bdoma")!) {
                             HStack(spacing: 2) {
-                                Text("Follow on X")
+                                Text("Follow @bdoma on X")
                                     .font(.system(size: 12))
                                 Image(systemName: "arrow.up.right")
                                     .font(.system(size: 9, weight: .semibold))
