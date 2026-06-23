@@ -74,7 +74,7 @@ export default function Hero() {
               <HeroVideoDialog
                 videoSrc="https://www.youtube.com/embed/cnI-cgNeRLs"
                 thumbnailSrc="https://img.youtube.com/vi/cnI-cgNeRLs/maxresdefault.jpg"
-                thumbnailAlt="Better Shot Demo Video"
+                thumbnailAlt="SupremeShot Demo Video"
                 animationStyle="from-center"
                 trigger={
                   <Button
@@ -102,7 +102,7 @@ export default function Hero() {
            
             <img
               src="/hero.png"
-              alt="Better Shot Screenshot"
+              alt="SupremeShot Screenshot"
               className="w-full max-w-2xl h-auto object-contain"
               draggable={false}
             />

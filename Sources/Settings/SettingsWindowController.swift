@@ -21,12 +21,15 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
 
         let win = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 680, height: 560),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable],
+            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false
         )
         win.contentView = hostingView
         win.title = "Settings"
+        win.titleVisibility = .hidden
+        win.titlebarAppearsTransparent = true
+        win.toolbarStyle = .unified
         win.isReleasedWhenClosed = false
         win.delegate = self
         win.collectionBehavior = [.transient, .moveToActiveSpace]

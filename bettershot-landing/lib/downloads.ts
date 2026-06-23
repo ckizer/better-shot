@@ -1,4 +1,4 @@
-const REPO = "KartikLabhshetwar/better-shot"
+const REPO = "ckizer/better-shot"
 const GITHUB_API = `https://api.github.com/repos/${REPO}/releases/latest`
 
 export interface ReleaseInfo {
@@ -8,7 +8,7 @@ export interface ReleaseInfo {
 }
 
 const fallback: ReleaseInfo = {
-  version: "0.3.7",
+  version: "0.4.0",
   appleSilicon: `https://github.com/${REPO}/releases/latest`,
   intel: `https://github.com/${REPO}/releases/latest`,
 }

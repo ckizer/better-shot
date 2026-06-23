@@ -27,16 +27,14 @@ struct PreferencesView: View {
     @State private var selectedSection: SettingsSection = .general
 
     var body: some View {
-        HStack(spacing: 0) {
+        NavigationSplitView {
             List(SettingsSection.allCases, selection: $selectedSection) { section in
                 Label(section.rawValue, systemImage: section.icon)
                     .tag(section)
             }
             .listStyle(.sidebar)
-            .frame(width: 170)
-
-            Divider()
-
+            .navigationSplitViewColumnWidth(min: 170, ideal: 170, max: 170)
+        } detail: {
             ZStack {
                 GeneralSettingsTab()
                     .opacity(selectedSection == .general ? 1 : 0)
@@ -61,6 +59,7 @@ struct PreferencesView: View {
         }
         .frame(minWidth: 680, minHeight: 560)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .toolbar(removing: .sidebarToggle)
     }
 }
 
@@ -1193,7 +1192,7 @@ struct AboutTab: View {
                             .foregroundStyle(.secondary)
                             .lineSpacing(2)
 
-                        Link("GitHub", destination: URL(string: "https://github.com/KartikLabhshetwar/better-shot")!)
+                        Link("GitHub", destination: URL(string: "https://github.com/ckizer/better-shot")!)
                             .font(.system(size: 12))
                     }
                 }

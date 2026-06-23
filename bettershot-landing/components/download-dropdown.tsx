@@ -36,7 +36,7 @@ export function DownloadDropdown({
 
   const handleHomebrew = () => {
     trackDownload(source)
-    window.open("https://formulae.brew.sh/cask/bettershot", "_blank")
+    window.open("https://formulae.brew.sh/cask/supremeshot", "_blank")
   }
 
   return (
@@ -73,7 +73,7 @@ export function DownloadDropdown({
           <Terminal className="mr-2 h-4 w-4" />
           <div className="flex flex-col">
             <span className="font-medium">Homebrew</span>
-            <span className="text-xs text-muted-foreground">brew install --cask bettershot</span>
+            <span className="text-xs text-muted-foreground">brew install --cask supremeshot</span>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

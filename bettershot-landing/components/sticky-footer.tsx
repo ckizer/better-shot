@@ -52,7 +52,7 @@ export function StickyFooter() {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="https://github.com/KartikLabhshetwar/better-shot"
+                    href="https://github.com/ckizer/better-shot"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline cursor-pointer transition-colors block"
@@ -65,7 +65,7 @@ export function StickyFooter() {
                 </li>
                 <li>
                   <a
-                    href="https://x.com/code_kartik"
+                    href="https://x.com/bdoma"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline cursor-pointer transition-colors block"
@@ -98,7 +98,7 @@ export function StickyFooter() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
             >
-              Better Shot
+              SupremeShot
             </motion.h2>
           </div>
         </motion.div>

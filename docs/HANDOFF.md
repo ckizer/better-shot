@@ -1,5 +1,67 @@
 # Handoff
 
+## 2026-06-23
+
+### Built
+
+- Made screenshot clipboard writes precompute PNG/TIFF data before touching `NSPasteboard`.
+- Switched the pasteboard commit from `writeObjects` without a clear/declare step to explicit `declareTypes` plus immediate `setData`.
+- Kept automatic post-capture copy on the already-rendered screenshot image and kept the shutter sound after the clipboard write path.
+
+### Decisions
+
+- This preserves copied output as the beautified screenshot while removing the stale-clipboard failure from the previous no-clear `writeObjects` attempt.
+- Did not add a raw-first clipboard mode yet; that remains a separate speed-versus-output tradeoff.
+
+### Open Questions
+
+- Stress-test rapid paste after the shutter sound with a clipboard history app running.
+
+### Next Slice
+
+- If the user still wants more speed, add an opt-in mode that writes the raw capture immediately, then replaces it with the beautified output when rendering finishes.
+
+## 2026-06-23
+
+### Built
+
+- Replaced the custom Settings `HStack` shell and manual vertical divider with `NavigationSplitView`, preserving the existing sidebar sections and state-preserving tab content.
+- Removed the SwiftUI sidebar collapse toolbar control from Settings.
+- Updated the Settings window to use full-size transparent titlebar chrome so the sidebar material extends under the traffic-light controls, matching macOS System Settings more closely.
+
+### Decisions
+
+- Used native SwiftUI split-view chrome so macOS owns the sidebar material, separator, and System Settings-like layout behavior instead of a custom 1px border.
+- Kept the 170pt sidebar width to avoid changing the preferences window proportions beyond the requested sidebar treatment.
+- Hid only the visible titlebar text; the window title remains set to `Settings`.
+
+### Open Questions
+
+- Visually confirm on the target macOS version that the native split-view sidebar matches the desired System Settings reference.
+
+### Next Slice
+
+- If the sidebar still exposes any native collapse affordance on older macOS versions, replace `NavigationSplitView` with a fixed `NSSplitView` bridge or a fixed SwiftUI shell using the same full-size titlebar chrome.
+
+## 2026-06-23
+
+### Built
+
+- Updated release-critical updater, About, README, and landing site links/copy for SupremeShot 0.4.0: `ckizer/better-shot` releases, SupremeShot product text, and `brew install --cask supremeshot`.
+
+### Decisions
+
+- Kept the repo slug, `bettershot-landing` folder, and `bettershot.site` domain references unchanged because the current repo/domain names have not changed.
+
+### Open Questions
+
+- Confirm whether the public landing domain should be renamed after the 0.4.0 release cutover.
+- `https://api.github.com/repos/ckizer/better-shot/releases/latest` currently returns 404 until the first public GitHub release exists.
+
+### Next Slice
+
+- Before shipping 0.4.0, verify the latest GitHub release in `ckizer/better-shot` has DMG assets for both Apple Silicon and Intel.
+
 ## 2026-06-20
 
 ### Built
@@ -54,7 +116,7 @@
 
 ### Open Questions
 
-- Confirm later whether repository/updater ownership should move away from `KartikLabhshetwar/better-shot`.
+- Resolved on 2026-06-23: repository/updater ownership now points at `ckizer/better-shot`.
 
 ### Next Slice
 

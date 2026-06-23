@@ -3,8 +3,8 @@ import Link from "next/link"
 import { getChangelog } from "@/lib/changelog"
 
 export const metadata = {
-  title: "Changelog — Better Shot",
-  description: "What's new in Better Shot. Release notes for every version.",
+  title: "Changelog — SupremeShot",
+  description: "What's new in SupremeShot. Release notes for every version.",
 }
 
 export default function ChangelogPage() {
@@ -17,7 +17,7 @@ export default function ChangelogPage() {
           <Link href="/" className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="" width={22} height={22} className="rounded-[5px]" />
             <span className="text-[13px] font-medium tracking-[-0.01em] text-[#111]/50">
-              Better Shot
+              SupremeShot
             </span>
           </Link>
         </div>
@@ -29,7 +29,7 @@ export default function ChangelogPage() {
             Changelog
           </h1>
           <p className="text-[14px] text-[#111]/30 mb-14">
-            What&apos;s new in every release of Better Shot.
+            What&apos;s new in every release of SupremeShot.
           </p>
 
           <div className="space-y-10">
@@ -67,7 +67,7 @@ export default function ChangelogPage() {
       <footer className="border-t border-[#111]/[0.04]">
         <div className="max-w-[960px] mx-auto px-6 py-6 flex items-center justify-between">
           <p className="text-[11px] text-[#111]/15">
-            &copy; {new Date().getFullYear()} Better Shot
+            &copy; {new Date().getFullYear()} SupremeShot
           </p>
           <nav className="flex items-center gap-5">
             <Link

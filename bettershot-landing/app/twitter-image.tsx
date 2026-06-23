@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Better Shot — Screenshots & screen recording for macOS";
+export const alt = "SupremeShot — Screenshots & screen recording for macOS";
 export const size = {
   width: 1200,
   height: 630,
@@ -61,7 +61,7 @@ export default async function Image() {
                 letterSpacing: "-0.01em",
               }}
             >
-              Better Shot
+              SupremeShot
             </span>
           </div>
 

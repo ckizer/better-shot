@@ -16,8 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **App icon**: Replaced the macOS app icon catalog with sizes generated from the new Icon Composer export
 - **Release notarization**: Added a `make ship` release script for Developer ID signed, notarized, stapled macOS DMGs
 - **Version bump**: Updated the app marketing version to 0.4.0
+- **Release links**: Updated native updater/About links, README release links, and landing download/install copy to use the SupremeShot name, `ckizer/better-shot` releases, and the `supremeshot` Homebrew cask
 - **Menu bar icon**: Replaced the menu bar status icon with the new camera asset
 - **Debug launch path**: Updated `make run` to launch `SupremeShot Dev.app`
+- **Settings sidebar**: Replaced the hand-rolled settings sidebar shell with a native SwiftUI split view, removed the sidebar collapse control, and extended the sidebar chrome under the window controls
 
 ### Added
 
@@ -26,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Clipboard reliability**: Screenshot copies now precompute image bytes, claim the pasteboard explicitly, set PNG/TIFF data immediately, and play the shutter sound after the clipboard write path finishes
 - **Screenshot paste scale**: Copied screenshots now use display-aware pasteboard sizing so Retina captures paste at 2x logical size while non-Retina external display captures stay at 1x
 - **Shortcut capture scale**: Global shortcut captures now resolve the originating screen from the keyboard event location and avoid falling back to 1x paste sizing for Retina region captures
 - **Menu bar popover polish**: Removed the popover arrow, tuned the shadow/ring, gave the menu shadow room to render without clipping, clamped the floating panel to the screen edge, and fixed status-item clicks so an open menu closes instead of reopening
@@ -186,7 +189,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Background picker in settings**: Cleaner grid layout with proper "None" swatch (strikethrough icon)
 - **Preview click-to-edit**: Clicking anywhere on the floating preview (including the hover overlay) now opens the editor
 - **Custom background image**: Fixed file picker for custom wallpaper backgrounds in editor
-- **GitHub link in About tab**: Corrected URL to `KartikLabhshetwar/better-shot`
+- **GitHub link in About tab**: Corrected the About tab GitHub URL
 
 ### Changed
 

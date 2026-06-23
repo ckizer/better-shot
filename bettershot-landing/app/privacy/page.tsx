@@ -3,8 +3,8 @@ import Link from "next/link"
 import Image from "next/image"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Better Shot",
-  description: "Privacy policy for Better Shot, the free open-source screenshot tool for macOS.",
+  title: "Privacy Policy - SupremeShot",
+  description: "Privacy policy for SupremeShot, the free open-source screenshot tool for macOS.",
   alternates: {
     canonical: "/privacy",
   },
@@ -16,8 +16,8 @@ export default function PrivacyPolicy() {
       <header>
         <div className="max-w-[600px] mx-auto px-6 h-12 flex items-center">
           <Link href="/" className="flex items-center gap-2 text-[13px] font-medium text-[#1a1a1a]/70 tracking-[-0.01em]">
-            <Image src="/logo.png" alt="Better Shot" width={18} height={18} className="rounded-[3px]" />
-            Better Shot
+            <Image src="/logo.png" alt="SupremeShot" width={18} height={18} className="rounded-[3px]" />
+            SupremeShot
           </Link>
         </div>
       </header>
@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-[15px] font-medium text-[#1a1a1a]/70 mb-3">Overview</h2>
             <p>
-              Better Shot is a free, open-source screenshot tool for macOS. We are committed
+              SupremeShot is a free, open-source screenshot tool for macOS. We are committed
               to protecting your privacy. This policy explains what data we collect and how
               we use it.
             </p>
@@ -43,7 +43,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-[15px] font-medium text-[#1a1a1a]/70 mb-3">Data Collection</h2>
             <p className="mb-3">
-              <strong className="text-[#1a1a1a]/70">Better Shot does not collect, store, or transmit
+              <strong className="text-[#1a1a1a]/70">SupremeShot does not collect, store, or transmit
               any personal data.</strong> All screenshots and annotations are processed locally
               on your device and never leave your computer.
             </p>
@@ -65,7 +65,7 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-[15px] font-medium text-[#1a1a1a]/70 mb-3">Third-Party Services</h2>
             <p>
-              Better Shot does not integrate with any third-party services that collect user
+              SupremeShot does not integrate with any third-party services that collect user
               data. The application is distributed via GitHub Releases and Homebrew.
             </p>
           </section>
@@ -73,10 +73,10 @@ export default function PrivacyPolicy() {
           <section>
             <h2 className="text-[15px] font-medium text-[#1a1a1a]/70 mb-3">Open Source</h2>
             <p>
-              Better Shot is open source under the MIT License. You can inspect the full
+              SupremeShot is open source under the MIT License. You can inspect the full
               source code on{" "}
               <a
-                href="https://github.com/KartikLabhshetwar/better-shot"
+                href="https://github.com/ckizer/better-shot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#1a1a1a]/70 underline underline-offset-4 hover:text-[#1a1a1a]/90 transition-colors"
@@ -92,7 +92,7 @@ export default function PrivacyPolicy() {
             <p>
               If you have questions about this privacy policy, you can reach out via{" "}
               <a
-                href="https://x.com/code_kartik"
+                href="https://x.com/bdoma"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#1a1a1a]/70 underline underline-offset-4 hover:text-[#1a1a1a]/90 transition-colors"
@@ -101,7 +101,7 @@ export default function PrivacyPolicy() {
               </a>{" "}
               or open an issue on{" "}
               <a
-                href="https://github.com/KartikLabhshetwar/better-shot/issues"
+                href="https://github.com/ckizer/better-shot/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#1a1a1a]/70 underline underline-offset-4 hover:text-[#1a1a1a]/90 transition-colors"

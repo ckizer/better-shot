@@ -19,7 +19,7 @@ final class AppUpdater {
 
     private(set) var state: State = .idle
 
-    private let owner = "KartikLabhshetwar"
+    private let owner = "ckizer"
     private let repo = "better-shot"
 
     private var currentVersion: String {

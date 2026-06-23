@@ -46,11 +46,11 @@ enum ScreenshotPasteboard {
     static func copyImage(at url: URL, preferredScreen: NSScreen? = nil) -> Bool {
         guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
               let cgImage = CGImageSourceCreateImageAtIndex(source, 0, nil) else { return false }
-        copyImage(cgImage, sourceURL: url, preferredScreen: preferredScreen)
-        return true
+        return copyImage(cgImage, sourceURL: url, preferredScreen: preferredScreen)
     }
 
-    static func copyImage(_ cgImage: CGImage, sourceURL: URL? = nil, preferredScreen: NSScreen? = nil, explicitScale: CGFloat? = nil) {
+    @discardableResult
+    static func copyImage(_ cgImage: CGImage, sourceURL: URL? = nil, preferredScreen: NSScreen? = nil, explicitScale: CGFloat? = nil) -> Bool {
         let pixelSize = CGSize(width: cgImage.width, height: cgImage.height)
         let scale = AppPreferences.copyScreenshotsAtRetinaScale
             ? (explicitScale ?? pasteScale(for: sourceURL, imageSize: pixelSize, preferredScreen: preferredScreen))
@@ -58,27 +58,24 @@ enum ScreenshotPasteboard {
         let displayScale = max(scale, 1)
         let logicalSize = NSSize(width: pixelSize.width / displayScale, height: pixelSize.height / displayScale)
 
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-
-        if let pasteboardItem = pasteboardItem(for: cgImage, logicalSize: logicalSize) {
-            pasteboard.writeObjects([pasteboardItem])
-        } else {
-            let nsImage = NSImage(cgImage: cgImage, size: logicalSize)
-            pasteboard.writeObjects([nsImage])
+        guard let payload = pasteboardPayload(for: cgImage, logicalSize: logicalSize) else {
+            return false
         }
+
+        return writePreparedPayload(payload)
     }
 
-    static func copyImage(_ image: NSImage, sourceURL: URL? = nil, preferredScreen: NSScreen? = nil) {
+    @discardableResult
+    static func copyImage(_ image: NSImage, sourceURL: URL? = nil, preferredScreen: NSScreen? = nil) -> Bool {
         if let sourceURL {
             if copyImage(at: sourceURL, preferredScreen: preferredScreen) {
-                return
+                return true
             }
         }
 
         var rect = CGRect(origin: .zero, size: image.size)
-        guard let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil) else { return }
-        copyImage(cgImage, preferredScreen: preferredScreen)
+        guard let cgImage = image.cgImage(forProposedRect: &rect, context: nil, hints: nil) else { return false }
+        return copyImage(cgImage, preferredScreen: preferredScreen)
     }
 
     private static func imagePixelSize(at url: URL?) -> CGSize? {
@@ -111,23 +108,44 @@ enum ScreenshotPasteboard {
         abs(lhs - rhs) <= 2
     }
 
-    private static func pasteboardItem(for cgImage: CGImage, logicalSize: NSSize) -> NSPasteboardItem? {
+    private static func pasteboardPayload(for cgImage: CGImage, logicalSize: NSSize) -> PasteboardPayload? {
         let bitmap = NSBitmapImageRep(cgImage: cgImage)
         bitmap.size = logicalSize
 
-        let item = NSPasteboardItem()
-        var hasData = false
+        let payload = PasteboardPayload(
+            pngData: bitmap.representation(using: .png, properties: [:]),
+            tiffData: bitmap.representation(using: .tiff, properties: [:])
+        )
 
-        if let pngData = bitmap.representation(using: .png, properties: [:]) {
-            item.setData(pngData, forType: .png)
-            hasData = true
+        return payload.hasData ? payload : nil
+    }
+
+    private static func writePreparedPayload(_ payload: PasteboardPayload) -> Bool {
+        var types: [NSPasteboard.PasteboardType] = []
+        if payload.pngData != nil { types.append(.png) }
+        if payload.tiffData != nil { types.append(.tiff) }
+        guard !types.isEmpty else { return false }
+
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes(types, owner: nil)
+
+        var wroteData = false
+        if let pngData = payload.pngData {
+            wroteData = pasteboard.setData(pngData, forType: .png) || wroteData
+        }
+        if let tiffData = payload.tiffData {
+            wroteData = pasteboard.setData(tiffData, forType: .tiff) || wroteData
         }
 
-        if let tiffData = bitmap.representation(using: .tiff, properties: [:]) {
-            item.setData(tiffData, forType: .tiff)
-            hasData = true
-        }
+        return wroteData
+    }
 
-        return hasData ? item : nil
+    private struct PasteboardPayload {
+        let pngData: Data?
+        let tiffData: Data?
+
+        var hasData: Bool {
+            pngData != nil || tiffData != nil
+        }
     }
 }

@@ -28,13 +28,13 @@ const testimonials = [
   {
     name: "Philipp Krenn",
     username: "@xeraa",
-    body: "free and OSS alternative to CleanShot X:\n\n@bettershotsite\n\nbecause not everything needs 100 features and a cloud service.",
+    body: "free and OSS alternative to CleanShot X:\n\nSupremeShot\n\nbecause not everything needs 100 features and a cloud service.",
     img: "https://media.licdn.com/dms/image/v2/C4E03AQGjEcUTWv9uaw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1517750712975?e=1770249600&v=beta&t=bL5WF-BgL3A8LndSSOahU5YKFD7u1Z48yq9g_iqAq4k",
   },
   {
     name: "Harshith Ashvi",
     username: "@HarshithAshvi",
-    body: "Don't build products, build an ecosystem of products.\n\n@stageeart\n - Browser based editor for creating visual design\n@bettershotsite\n - Mac app for screenshot and make it look good at same time\n\nAmazing work at great speed!",
+    body: "Don't build products, build an ecosystem of products.\n\n@stageeart\n - Browser based editor for creating visual design\nSupremeShot\n - Mac app for screenshot and make it look good at same time\n\nAmazing work at great speed!",
     img: "https://pbs.twimg.com/profile_images/1953863730392862720/tGihM77m_400x400.jpg",
   },
   {
@@ -109,7 +109,7 @@ export function TestimonialsSection() {
           </h2>
 
           <p className="mt-5 relative z-10 text-center text-lg text-zinc-500">
-            Join developers and creators who use Better Shot to capture and enhance their screenshots every day.
+            Join developers and creators who use SupremeShot to capture and enhance their screenshots every day.
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export function TestimonialsSection() {
 
         <div className="-mt-8 flex justify-center">
           <a
-            href="https://github.com/KartikLabhshetwar/better-shot"
+            href="https://github.com/ckizer/better-shot"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-2 rounded-full border border-[#e78a53]/30 bg-black/50 px-6 py-3 text-sm font-medium text-white transition-all hover:border-[#e78a53]/60 hover:bg-[#e78a53]/10 active:scale-95"

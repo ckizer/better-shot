@@ -13,19 +13,19 @@ export function FAQSection() {
 
   const faqs = [
     {
-      question: "What is Better Shot?",
+      question: "What is SupremeShot?",
       answer:
-        "Better Shot is a free, open-source screenshot tool for macOS. It's an alternative to CleanShot X that lets you capture, edit, and enhance screenshots with professional quality. All processing happens locally on your machine.",
+        "SupremeShot is a free, open-source screenshot tool for macOS. It's an alternative to CleanShot X that lets you capture, edit, and enhance screenshots with professional quality. All processing happens locally on your machine.",
     },
     {
-      question: "Is Better Shot really free?",
+      question: "Is SupremeShot really free?",
       answer:
-        "Yes! Better Shot is 100% free and open source. There are no subscriptions, no paywalls, and no hidden costs. You can download it, use it, and even modify the source code to suit your needs.",
+        "Yes! SupremeShot is 100% free and open source. There are no subscriptions, no paywalls, and no hidden costs. You can download it, use it, and even modify the source code to suit your needs.",
     },
     {
       question: "What capture modes are available?",
       answer:
-        "Better Shot supports three capture modes: Region Capture (⌘⇧2) to select any area, Fullscreen Capture (⌘⇧F) for your entire screen, and Window Capture (⌘⇧D) to capture a specific window. All modes work with global hotkeys from anywhere, and you can customize these shortcuts in Preferences.",
+        "SupremeShot supports three capture modes: Region Capture (⌘⇧2) to select any area, Fullscreen Capture (⌘⇧F) for your entire screen, and Window Capture (⌘⇧D) to capture a specific window. All modes work with global hotkeys from anywhere, and you can customize these shortcuts in Preferences.",
     },
     {
       question: "What editing features are included?",
@@ -35,7 +35,7 @@ export function FAQSection() {
     {
       question: "Can I customize keyboard shortcuts?",
       answer:
-        "Yes! Better Shot includes a Preferences page where you can customize all keyboard shortcuts. You can edit existing shortcuts, add new ones, enable or disable them, and remove custom shortcuts. Changes are saved automatically and take effect immediately.",
+        "Yes! SupremeShot includes a Preferences page where you can customize all keyboard shortcuts. You can edit existing shortcuts, add new ones, enable or disable them, and remove custom shortcuts. Changes are saved automatically and take effect immediately.",
     },
     {
       question: "Can I set a default background?",
@@ -45,17 +45,17 @@ export function FAQSection() {
     {
       question: "What annotation tools are available?",
       answer:
-        "Better Shot includes a full set of annotation tools: circles, rectangles, lines, arrows, text annotations, and auto-incrementing numbered labels. You can customize colors, opacity, borders, alignment, and font sizes. Select any annotation to edit its properties in the properties panel.",
+        "SupremeShot includes a full set of annotation tools: circles, rectangles, lines, arrows, text annotations, and auto-incrementing numbered labels. You can customize colors, opacity, borders, alignment, and font sizes. Select any annotation to edit its properties in the properties panel.",
     },
     {
       question: "Do I need special permissions?",
       answer:
-        "Yes, Better Shot requires Screen Recording permission on macOS. This is required for the app to capture screenshots. You'll be prompted to grant this permission on first launch, and you can enable it in System Settings → Privacy & Security → Screen Recording.",
+        "Yes, SupremeShot requires Screen Recording permission on macOS. This is required for the app to capture screenshots. You'll be prompted to grant this permission on first launch, and you can enable it in System Settings → Privacy & Security → Screen Recording.",
     },
     {
       question: "Can I build from source?",
       answer:
-        "Absolutely! Better Shot is open source and available on GitHub. You can clone the repository, install dependencies with pnpm, and build using `pnpm tauri build`. See the README for detailed instructions.",
+        "Absolutely! SupremeShot is open source and available on GitHub. Clone the repository, open SupremeShot.xcodeproj in Xcode, or use the Makefile commands documented in the README.",
     },
   ]
 

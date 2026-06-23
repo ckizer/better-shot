@@ -80,7 +80,7 @@ export function EditorPreview() {
             <div className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
           <div className="flex-1 text-center text-xs text-black/40 font-medium tracking-tight">
-            bettershot_screenshot
+            supremeshot_screenshot
           </div>
           <div className="flex gap-2">
             <div className="text-[11px] text-black/30 px-2 py-0.5 bg-black/[0.04] rounded-[5px]">Cancel</div>
@@ -214,7 +214,7 @@ export function EditorPreview() {
                       ⌘
                     </div>
                     <div className="text-[11px] text-white/60 font-semibold tracking-tight">
-                      Better Shot
+                      SupremeShot
                     </div>
                     <div className="text-[8px] text-white/30 max-w-[60%] text-center leading-snug">
                       Capture, annotate, and beautify your screenshots

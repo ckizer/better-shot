@@ -62,8 +62,6 @@ final class CaptureOrchestrator {
             let pasteScale = pasteScale(for: url)
             ScreenshotPasteboard.registerPasteScale(pasteScale, for: url)
 
-            ScreenCapture.shared.playShutterSound()
-
             let record = HistoryStore.shared.importCapture(from: url)
             if let record {
                 lastCaptureURL = HistoryStore.shared.urlForRecord(record)
@@ -132,16 +130,23 @@ final class CaptureOrchestrator {
             }
         }
 
+        var copiedToClipboard = false
         if AppPreferences.copyAfterSave, let savedURL {
-            ScreenshotPasteboard.copyImage(at: savedURL)
+            copiedToClipboard = ScreenshotPasteboard.copyImage(
+                rendered,
+                sourceURL: savedURL,
+                explicitScale: pasteScale
+            )
         }
 
         let displayURL = savedURL ?? url
 
+        ScreenCapture.shared.playShutterSound()
+
         if savedURL != nil {
             let appIcon = NSImage(named: "AppIcon") ?? NSApp.applicationIconImage
             ToastWindow.shared.show(
-                message: AppPreferences.copyAfterSave ? "Screenshot saved & copied!" : "Screenshot saved!",
+                message: AppPreferences.copyAfterSave && copiedToClipboard ? "Screenshot saved & copied!" : "Screenshot saved!",
                 icon: appIcon,
                 on: captureScreen
             )

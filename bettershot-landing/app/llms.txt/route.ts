@@ -1,17 +1,17 @@
 export const dynamic = "force-static"
 
 export async function GET() {
-  const llmsContent = `# Better Shot
+  const llmsContent = `# SupremeShot
 
 > An open-source alternative to CleanShot X for macOS. Capture, annotate, and beautify screenshots — local-first, no account, no cloud, no telemetry.
 
-Better Shot is a free, native macOS screenshot tool built with Swift 6 and SwiftUI. It lives in the menu bar and provides professional-grade capture, annotation, and beautification without subscriptions or cloud dependencies.
+SupremeShot is a free, native macOS screenshot tool built with Swift 6 and SwiftUI. It lives in the menu bar and provides professional-grade capture, annotation, and beautification without subscriptions or cloud dependencies.
 
 ## Core Resources
 
 [Homepage]: https://bettershot.site - Landing page with features, screenshots, and download links
-[GitHub Repository]: https://github.com/KartikLabhshetwar/better-shot - Source code, issues, and releases
-[Contributing Guide]: https://github.com/KartikLabhshetwar/better-shot/blob/main/CONTRIBUTING.md - Setup, architecture, and contribution guidelines
+[GitHub Repository]: https://github.com/ckizer/better-shot - Source code, issues, and releases
+[Contributing Guide]: https://github.com/ckizer/better-shot/blob/main/CONTRIBUTING.md - Setup, architecture, and contribution guidelines
 
 ## Key Features
 
@@ -53,7 +53,7 @@ Better Shot is a free, native macOS screenshot tool built with Swift 6 and Swift
 - **Architecture**: Menu bar app using custom NSPanel popover, not MenuBarExtra
 - **Data**: All preferences via UserDefaults, capture history stored as JSON in Application Support
 - **No external dependencies**: No Electron, no web views, no third-party packages
-- **Install**: Homebrew (\`brew install --cask bettershot\`) or direct DMG download (Apple Silicon + Intel)
+- **Install**: Homebrew (\`brew install --cask supremeshot\`) or direct DMG download (Apple Silicon + Intel)
 - **License**: BSD 3-Clause
 `
 

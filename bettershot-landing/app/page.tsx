@@ -16,7 +16,7 @@ export default async function Home() {
           <a href="/" className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="" width={22} height={22} className="rounded-[5px]" />
             <span className="text-[13px] font-semibold tracking-[-0.01em] text-[#111]/70">
-              Better Shot
+              SupremeShot
             </span>
           </a>
           <div className="flex items-center gap-6">
@@ -27,7 +27,7 @@ export default async function Home() {
               Changelog
             </Link>
             <a
-              href="https://github.com/KartikLabhshetwar/better-shot"
+              href="https://github.com/ckizer/better-shot"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[12px] text-[#111]/30 hover:text-[#111]/60 transition-colors hidden sm:block"
@@ -54,7 +54,7 @@ export default async function Home() {
           <div className="flex items-center gap-3 mt-10">
             <DownloadDropdown release={release} source="hero" />
             <a
-              href="https://github.com/KartikLabhshetwar/better-shot"
+              href="https://github.com/ckizer/better-shot"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-5 h-11 text-[13px] font-medium text-[#111]/35 hover:text-[#111]/60 border border-[#111]/[0.08] hover:border-[#111]/[0.15] rounded-lg transition-all"
@@ -254,7 +254,7 @@ export default async function Home() {
               <DownloadDropdown release={release} source="cta" />
               <div className="flex items-center gap-2 text-[12px] text-[#111]/20 font-mono bg-[#111]/[0.03] px-4 py-2 rounded-lg">
                 <span className="text-[#111]/30">$</span>
-                brew install --cask bettershot
+                brew install --cask supremeshot
               </div>
             </div>
           </div>
@@ -267,7 +267,7 @@ export default async function Home() {
           <div className="flex items-center gap-2.5">
             <Image src="/logo.png" alt="" width={16} height={16} className="rounded-[3px] opacity-40" />
             <p className="text-[11px] text-[#111]/20">
-              &copy; {new Date().getFullYear()} Better Shot
+              &copy; {new Date().getFullYear()} SupremeShot
             </p>
           </div>
           <nav className="flex items-center gap-5">
@@ -278,7 +278,7 @@ export default async function Home() {
               Changelog
             </Link>
             <a
-              href="https://x.com/code_kartik"
+              href="https://x.com/bdoma"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[11px] text-[#111]/20 hover:text-[#111]/45 transition-colors"
@@ -292,7 +292,7 @@ export default async function Home() {
               Privacy
             </Link>
             <a
-              href="https://github.com/KartikLabhshetwar/better-shot"
+              href="https://github.com/ckizer/better-shot"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[11px] text-[#111]/20 hover:text-[#111]/45 transition-colors"

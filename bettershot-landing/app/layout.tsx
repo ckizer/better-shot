@@ -5,7 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Better Shot — Screenshots & screen recording for macOS",
+  title: "SupremeShot — Screenshots & screen recording for macOS",
   description:
     "Free, open-source screen capture tool for macOS. Screenshots, recordings, annotations, and effects — all in one local-first app. No account needed.",
   metadataBase: new URL("https://bettershot.site"),
@@ -25,20 +25,20 @@ export const metadata: Metadata = {
     "MP4 recording",
   ],
   openGraph: {
-    title: "Better Shot — Screenshots & screen recording for macOS",
+    title: "SupremeShot — Screenshots & screen recording for macOS",
     description:
       "Free, open-source screen capture tool for macOS. Screenshots, recordings, annotations, and effects — all in one local-first app.",
     url: "https://bettershot.site",
-    siteName: "Better Shot",
+    siteName: "SupremeShot",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Better Shot — Screenshots & screen recording for macOS",
+    title: "SupremeShot — Screenshots & screen recording for macOS",
     description:
       "Free, open-source screen capture tool for macOS. Screenshots, recordings, annotations, and effects — all in one local-first app.",
-    creator: "@code_kartik",
+    creator: "@bdoma",
   },
   robots: {
     index: true,
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Better Shot",
+  name: "SupremeShot",
   applicationCategory: "UtilitiesApplication",
   operatingSystem: "macOS",
   offers: {
@@ -67,11 +67,11 @@ const jsonLd = {
   description:
     "Free, open-source screen capture tool for macOS. Screenshots, recordings, annotations, and effects — all in one local-first app.",
   url: "https://bettershot.site",
-  downloadUrl: "https://github.com/KartikLabhshetwar/better-shot/releases",
+  downloadUrl: "https://github.com/ckizer/better-shot/releases",
   author: {
     "@type": "Person",
-    name: "Kartik Labhshetwar",
-    url: "https://x.com/code_kartik",
+    name: "Court Kizer",
+    url: "https://x.com/bdoma",
   },
 }
 
